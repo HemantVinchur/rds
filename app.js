@@ -5,6 +5,7 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 const config = require('./config')
+var multer = require('multer');
 const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate')
 const app = express();

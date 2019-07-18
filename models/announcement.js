@@ -2,8 +2,8 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 let announcementSchema = new Schema({
-    announcement: String,
-    date:Date,
+    title: String,
+    description: String,
     createdAt: { type: Date, default: Date.now() }
 })
 

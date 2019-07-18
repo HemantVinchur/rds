@@ -87,8 +87,8 @@ const updateAnnouncement = async (req, res) => {
                 _id: mongodb.ObjectID(req.params.id)
             },
                 {
-                    announcement: req.body.announcement,
-                    date: req.body.date
+                    title: req.body.title,
+                    description: req.body.description,
                 },
 
                 (error, data) => {
@@ -129,8 +129,8 @@ const updateNotice = async (req, res) => {
                 _id: mongodb.ObjectID(req.params.id)
             },
                 {
-                    notice: req.body.notice,
-                    date: req.body.date
+                    title: req.body.title,
+                    description: req.body.description,
                 },
 
                 (error, data) => {
