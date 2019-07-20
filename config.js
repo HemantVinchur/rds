@@ -2,7 +2,7 @@ let settings = {};
 
 const DBConfig={
     local:{
-        port:3000,
+        port:3002,
         mongo:{
             host:"localhost",
             port:27017,

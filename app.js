@@ -5,7 +5,7 @@ const logger = require('morgan')
 const bodyParser = require('body-parser')
 const routes = require('./routes')
 const config = require('./config')
-var multer = require('multer');
+const multer = require('multer');
 const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate')
 const app = express();
@@ -15,8 +15,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-//const URI = "mongodb://localhost:27017/rds";
 console.log(config.URI)
 mongoose.connect(config.URI, { useNewUrlParser: true })
     .then(() => {

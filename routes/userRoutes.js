@@ -7,86 +7,225 @@ const notice = require('../models/notice')
 const validator = require('../validators/userValidator')
 const services = require('../services/userServices')
 
- 
+
 console.log("userRoutes....................")
-//Registration
+//Create announcement
 
 router.post('/announcement', validator.announcementValidator,
-async(req, res) => {
-    try{
-        console.log("Register.......")
-     let payLoad=req.body;
-    let userData=await services.userAnnouncement(payLoad);
-    return res.status(200).json({
-        statusCode:200,
-        message:"sucess",
-        data:userData
+    async (req, res) => {
+        try {
+            console.log("Announcement post API")
+            let payLoad = req.body;
+            let userData = await services.userAnnouncement(payLoad);
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Announcement successfully created!!!!",
+                data: userData
+            })
+
+        } catch (error) {
+            res.status(200).json({
+                statusCode: 400,
+                message: "Somthing went wrong.",
+                data: {}
+            })
+
+
+        }
+
+
     })
 
-    }catch(error){
-        res.status(200).json({
-            statusCode:400,
-            message:"somthing went wrong",
-            data:{}
+//Create notice
+
+router.post('/notice', validator.noticeValidator,
+  async  (req, res) => {
+        try {
+            console.log("Notice post API")
+            let payLoad = req.body;
+            let userData = await services.userNotice(payLoad);
+            return res.status(200).json({
+                statusCode: 200,
+                message: "Notice successfully created!!!!",
+                data: userData
+            })
+
+        } catch (error) {
+            res.status(200).json({
+                statusCode: 400,
+                message: "Somthing went wrong.",
+                data: {}
+            })
+
+
+        }
+
+    })
+
+
+
+//Fetch announcement
+
+router.get('/getAnnouncement',
+async (req, res) => {
+    try {
+        console.log("Announcement get API")
+        let userData = await services.getAnnouncement();
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Announcement successfully fetched!!!!",
+            data: userData
         })
-    
+
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
+
 
     }
-     
-   
+
 })
 
-//Login
+//Fetch notice
 
-router.post('/notice', validator.noticeValidator, (req, res) => {
-    services.userNotice(req, res);
+router.get('/getNotice', 
+async (req, res) => {
+    try {
+        console.log("Notice get API")
+        let userData = await services.getNotice();
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Notice successfully fetched!!!!",
+            data: userData
+        })
+
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
+
+
+    }
+
+})
+
+//Update announcement
+
+router.put('/updateAnnouncement/:id',
+async (req, res) => {
+    try {
+        console.log("Announcement update API")
+        let payLoad = req.body;
+        let params = req.params;
+        let userData = await services.updateAnnouncement(payLoad,params);
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Announcement successfully updated!!!!",
+            data: userData
+        })
+
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
+
+
+    }
+
+})
+
+//Update notice
+
+router.put('/updateNotice/:id',
+async (req, res) => {
+    try {
+        console.log("Notice update API")
+        let payLoad = req.body;
+        let params = req.params;
+        let userData = await services.updateNotice(payLoad,params);
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Notice successfully updated!!!!",
+            data: userData
+        })
+
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
+
+
+    }
+
 })
 
 
+//Delete announcement
 
-//Login
+router.delete('/deleteAnnouncement/:id',
+async (req, res) => {
+    try {
+        console.log("Announcement delete API")
+        let params = req.params;
+        console.log(params)
+        let userData = await services.deleteAnnouncement(params);
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Announcement successfully deleted!!!!",
+            data: userData
+        })
 
-router.get('/getAnnouncement',(req, res) => {
-    services.getAnnouncement(req, res);
-})
-
-//Login
-
-router.get('/getNotice',(req, res) => {
-    services.getNotice(req, res);
-})
-
-//Login
-
-router.put('/updateAnnouncement/:id',(req, res) => {
-    services.updateAnnouncement(req, res);
-})
-
-//Login
-
-router.put('/updateNotice/:id',(req, res) => {
-    services.updateNotice(req, res);
-})
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
 
 
-//Login
-
-router.delete('/deleteAnnouncement/:id',(req, res, next) => {
-    services.deleteAnnouncement(req, res, next);
+    }
 })
 
 
-//Login
+//delete notice
 
-router.delete('/deleteNotice/:id',(req, res, next) => {
-    services.deleteNotice(req, res, next);
+router.delete('/deleteNotice/:id',
+async (req, res) => {
+    try {
+        console.log("Notice delete API")
+        let params = req.params;
+        let userData = await services.deleteNotice(params);
+        return res.status(200).json({
+            statusCode: 200,
+            message: "Notice successfully deleted!!!!",
+            data: userData
+        })
+
+    } catch (error) {
+        res.status(200).json({
+            statusCode: 400,
+            message: "Somthing went wrong.",
+            data: {}
+        })
+
+
+    }
 })
 //Token
 router.get('/', (req, res, next) => {
     let token = req.headers.authorization.split(' ')[1];
     jwt.verify(token, 's3cr3t', (err, decoded) => {
         if (err) {
-            console.log(err) 
+            console.log(err)
             throw err;
         }
         console.log(decoded)

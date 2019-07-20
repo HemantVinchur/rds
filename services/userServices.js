@@ -6,12 +6,12 @@ const notice = require('../models/notice')
 const validator = require('../validators/userValidator')
 const jwt = require('jsonwebtoken');
 
-//Registration
+//Create announcement
 
 const userAnnouncement = async (payLoad) => {
-    console.log("userRegister")
+    console.log("Create announcement")
     try {
-        console.log("userRegister")
+        console.log("userAnnouncement")
         console.log(payLoad)
         let userData = await announcement.create(payLoad);
         return userData
@@ -21,160 +21,126 @@ const userAnnouncement = async (payLoad) => {
     }
 }
 
-//Login
+//Create notice
 
-const userNotice = async (req, res) => {
-    console.log("Login.................")
+const userNotice = async (payLoad) => {
+    console.log("Create notice")
     try {
-        let payLoad = req.body;
+        console.log("userNotice")
         console.log(payLoad)
         let userData = await notice.create(payLoad);
-        return res.status(200).json({
-            statusCode: 200,
-            message: "Success",
-            data: userData
-        })
+        return userData
     } catch (error) {
-        console.log(error)
-        res.status(200).json({
-            statusCode: 400,
-            message: "Something went wrong",
-            data: {}
-        })
+        console.error(error)
+        throw error;
     }
 }
 
-const getAnnouncement = async (req, res) => {
+//Get announcement
+
+const getAnnouncement = async () => {
+    console.log("Get announcement")
     try {
-        let userData = await announcement.find({}, (error, user) => {
-            if (error) return next(error)
-            res.send(user)
-        })
+        console.log("getAnnouncement")
+        let userData = await announcement.find();
+        return userData;
     } catch (error) {
-        console.log(error)
-        res.status(200).json({
-            statusCode: 400,
-            message: "Something went wrong",
-            data: {}
-        })
+        console.error(error)
+        throw error;
     }
 }
 
-const getNotice = async (req, res) => {
+//Get notice
+
+const getNotice = async () => {
+    console.log("Get notice")
     try {
-        let userData = await notice.find({}, (error, user) => {
-            if (error) return next(error)
-            res.send(user)
-        })
+        console.log("getNotice")
+        let userData = await notice.find();
+        return userData;
     } catch (error) {
-        console.log(error)
-        res.status(200).json({
-            statusCode: 400,
-            message: "Something went wrong",
-            data: {}
-        })
+        console.error(error)
+        throw error;
     }
 }
 
+//Update announcement
 
-const updateAnnouncement = async (req, res) => {
-
+const updateAnnouncement = async (payLoad, params) => {
+    console.log("Update announcement")
     try {
-        announcement.findOne({ id: req.params.id }, (err, data) => {
+        console.log("updateAnnouncement")
+        announcement.findOne({ id: params.id }, async (err, data) => {
 
             console.log('111000')
-            announcement.updateOne({
-                _id: mongodb.ObjectID(req.params.id)
+            let userData = await announcement.updateOne({
+                _id: mongodb.ObjectID(params.id)
             },
                 {
-                    title: req.body.title,
-                    description: req.body.description,
-                },
-
-                (error, data) => {
-                    if (error) {
-                        res.status(200).json({
-                            statusCode: 400,
-                            message: "user not found",
-
-
-                        })
-                    }
-                    return res.status(200).json({
-                        statusCode: 200,
-                        message: "sucess",
-                        data: data
-                    })
-                })
+                    title: payLoad.title,
+                    description: payLoad.description,
+                });
+            return userData;
         })
-    } catch (err) {
-        console.error(err)
-        res.status(200).json({
-            statusCode: 400,
-            message: "somthing is going wrong"
-        })
+    } catch (error) {
+        console.error(error)
+        throw error
 
     }
 
 }
 
+//Update notice
 
-const updateNotice = async (req, res) => {
-
+const updateNotice = async (payLoad, params) => {
+    console.log("Update notice")
     try {
-        notice.findOne({ id: req.params.id }, (err, data) => {
+        console.log("updateNotice")
+        notice.findOne({ id: params.id }, async (err, data) => {
 
             console.log('111000')
-            notice.updateOne({
-                _id: mongodb.ObjectID(req.params.id)
+            let userData = await notice.updateOne({
+                _id: mongodb.ObjectID(params.id)
             },
                 {
-                    title: req.body.title,
-                    description: req.body.description,
-                },
-
-                (error, data) => {
-                    if (error) {
-                        res.status(200).json({
-                            statusCode: 400,
-                            message: "user not found",
-
-
-                        })
-                    }
-                    return res.status(200).json({
-                        statusCode: 200,
-                        message: "sucess",
-                        data: data
-                    })
-                })
+                    title: payLoad.title,
+                    description: payLoad.description,
+                });
+            return userData;
         })
-    } catch (err) {
-        console.error(err)
-        res.status(200).json({
-            statusCode: 400,
-            message: "somthing is going wrong"
-        })
+    } catch (error) {
+        console.error(error)
+        throw error
 
     }
 
 }
 
+//Delete announcement
 
-const deleteAnnouncement = async (req, res, next) => {
-    let userData = await announcement.deleteOne({ _id: mongodb.ObjectID(req.params.id) }, (error, results) => {
-        if (error) return next(error)
-        res.send(results)
-        console.log(results  )
-    })
+const deleteAnnouncement = async (params) => {
+    console.log("Delete announcement")
+    try{
+    console.log("deleteAnnouncement")
+    let userData = await announcement.deleteOne({ _id: mongodb.ObjectID(params.id) });
+    return userData;
+    }catch(error){
+        console.error(error)
+        throw error
+    }
 }
 
+//Delete notice
 
-const deleteNotice = async (req, res, next) => {
-    let userData = await notice.deleteOne({ _id: mongodb.ObjectID(req.params.id) }, (error, results) => {
-        if (error) return next(error)
-        res.send(results)
-        console.log(results  )
-    })
+const deleteNotice = async (params) => {
+    console.log("Delete notice")
+    try {
+        console.log("deleteNotice")
+        let userData = await notice.deleteOne({ _id: mongodb.ObjectID(params.id) });
+        return userData;
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 }
 module.exports = { userAnnouncement, userNotice, getAnnouncement, getNotice, updateAnnouncement, updateNotice, deleteAnnouncement, deleteNotice }
