@@ -2,7 +2,9 @@ const functions = require('../function')
 const mongoose = require('mongoose')
 const mongodb = require('mongodb');
 const announcement = require('../models/announcement')
+const email = require('../models/email')
 const notice = require('../models/notice')
+var nodemailer = require('nodemailer');
 const validator = require('../validators/userValidator')
 const jwt = require('jsonwebtoken');
 
@@ -36,6 +38,50 @@ const userNotice = async (payLoad) => {
     }
 }
 
+
+//Create email
+
+const userEmail = async (payLoad) => {
+    console.log("Create email")
+    try {
+        console.log("userEmail")
+        console.log(payLoad)
+        let userData = await email.create(payLoad);
+        return userData
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}
+
+
+//Send email
+const sendMail = async (payLoad) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'gattoo1997@gmail.com',
+                pass: 'Gattoo@123'
+            }
+        });
+
+        const mailOptions = {
+            from: 'gattoo1997@gmail.com',
+            to: payLoad.email,
+            subject: payLoad.subject,
+            text: payLoad.message
+        };
+
+        let sendMail = await transporter.sendMail(mailOptions);
+
+        return sendMail;
+
+    } catch (error) {
+        console.error(error)
+        throw error;
+    }
+}
 //Get announcement
 
 const getAnnouncement = async () => {
@@ -120,11 +166,11 @@ const updateNotice = async (payLoad, params) => {
 
 const deleteAnnouncement = async (params) => {
     console.log("Delete announcement")
-    try{
-    console.log("deleteAnnouncement")
-    let userData = await announcement.deleteOne({ _id: mongodb.ObjectID(params.id) });
-    return userData;
-    }catch(error){
+    try {
+        console.log("deleteAnnouncement")
+        let userData = await announcement.deleteOne({ _id: mongodb.ObjectID(params.id) });
+        return userData;
+    } catch (error) {
         console.error(error)
         throw error
     }
@@ -143,4 +189,4 @@ const deleteNotice = async (params) => {
         throw error
     }
 }
-module.exports = { userAnnouncement, userNotice, getAnnouncement, getNotice, updateAnnouncement, updateNotice, deleteAnnouncement, deleteNotice }
+module.exports = { userAnnouncement, userNotice, userEmail, sendMail, getAnnouncement, getNotice, updateAnnouncement, updateNotice, deleteAnnouncement, deleteNotice }
