@@ -54,23 +54,23 @@ const userEmail = async (payLoad) => {
     }
 }
 
-
+ 
 //Send email
 const sendMail = async (payLoad) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'gattoo1997@gmail.com',
-                pass: 'Gattoo@123'
+                user: 'venus.bityotta@gmail.com',
+                pass: 'venus@123'
             }
         });
 
         const mailOptions = {
-            from: 'gattoo1997@gmail.com',
+            from: 'venus.bityotta@gmail.com',
             to: payLoad.email,
             subject: payLoad.subject,
-            text: payLoad.message
+            text: "Hi, "+"\n"+"Client name-: "+payLoad.name+'\n'+"Email-: "+payLoad.email+"\n"+"Message-:"+payLoad.message
         };
 
         let sendMail = await transporter.sendMail(mailOptions);
