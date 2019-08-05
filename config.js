@@ -11,14 +11,6 @@ const DBConfig = {
     },
     dev: {
         port: 2002,
-        mongo: {
-            user: process.env.MONGO_USER ? process.env.MONGO_USER : "server",
-            password: process.env.MONGO_PASS ? process.env.MONGO_PASS : "ev21uXc6b1lUY20J",
-            host: "localhost",
-            port: 27017,
-            database: process.env.MONGO_DBNAME_DEV ? process.env.MONGO_DBNAME_DEV : "server_dev"
-        },
-
     },
 
     /* test:{
