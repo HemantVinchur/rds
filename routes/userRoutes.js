@@ -5,34 +5,6 @@ const functions = require('../function')
 var nodemailer = require('nodemailer');
 const validator = require('../validators/userValidator')
 const services = require('../services/userServices')
-
-//Create email
-
-router.post('/email', validator.emailValidator,
-    async (req, res) => {
-        try {
-            console.log("Email post API")
-            let payLoad = req.body;
-            let userData = await services.userEmail(payLoad);
-            return res.status(200).json({
-                statusCode: 200,
-                message: "Email successfully created!!!!",
-                data: userData
-            })
-
-        } catch (error) {
-            res.status(200).json({
-                statusCode: 400,
-                message: "Somthing went wrong.",
-                data: {}
-            })
-
-
-        }
-
-
-    })
-
 //Send email
 
 router.post('/send', validator.emailValidator,

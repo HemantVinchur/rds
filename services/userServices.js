@@ -5,21 +5,6 @@ const email = require('../models/email')
 var nodemailer = require('nodemailer');
 const validator = require('../validators/userValidator')
 const jwt = require('jsonwebtoken');
-//Create email
-
-const userEmail = async (payLoad) => {
-    console.log("Create email")
-    try {
-        console.log("userEmail")
-        console.log(payLoad)
-        let userData = await email.create(payLoad);
-        return userData
-    } catch (error) {
-        console.error(error)
-        throw error;
-    }
-}
-
 
 //Send email
 const sendMail = async (payLoad) => {
@@ -49,4 +34,4 @@ const sendMail = async (payLoad) => {
     }
 }
 
-    module.exports = { userEmail, sendMail }
+    module.exports = { sendMail }
