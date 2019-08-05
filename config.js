@@ -26,10 +26,10 @@ const DBConfig = {
      },*/
 }
 
-switch (process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0') {
+switch (process.env.NODE_ENV) {
     case "dev":
         let dev = DBConfig.dev;
-        DBConfig.div.URI = `mongodb://${dev.mongo.user}:${dev.mongo.password}@${dev.mongo.host}:${dev.mongo.port}/${dev.mongo.database}`
+        DBConfig.dev.URI = `mongodb://${dev.mongo.user}:${dev.mongo.password}@${dev.mongo.host}:${dev.mongo.port}/${dev.mongo.database}`
         settings = DBConfig.dev
         break;
 
