@@ -19,7 +19,7 @@ const sendMail = async (payLoad) => {
 
         const mailOptions = {
             from: 'venus.bityotta@gmail.com',
-            to: 'hemantvinchur96@gmail.com',
+            to: 'venuswheelcompany@rediffmail.com',
             subject: payLoad.subject,
             text: "Hi, " + "\n" + "Client name-: " + payLoad.name + '\n' + "Email-: " + payLoad.email + "\n" + "Message-:" + payLoad.message
         };
